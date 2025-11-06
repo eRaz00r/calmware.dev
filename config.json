@@ -1,0 +1,49 @@
+{
+  "defaultAccent": "purple",
+  "bannerContent": null,
+  "bannerText": "Calmware",
+  "bannerAsciiFont": "ANSI Shadow",
+  "bannerSize": {
+    "min": "8px",
+    "vw": "8px",
+    "max": "8px"
+  },
+  "showBannerOnLoad": true,
+  "themeMap": {
+    "purple": "#9b87f5",
+    "cyan": "#7cd4ff",
+    "green": "#7bd88f"
+  },
+  "content": {
+    "dir": "content",
+    "ext": ".md",
+    "map": {}
+  },
+  "commands": [
+    {
+      "name": "show about",
+      "description": "Display information about calmware.dev",
+      "emoji": "ℹ️",
+      "markdown": "about.md",
+      "category": "info",
+      "order": 2
+    },
+    {
+      "name": "show services",
+      "description": "List available services",
+      "emoji": "🛠️",
+      "markdown": "services.md",
+      "category": "info",
+      "order": 1
+    },
+    {
+      "name": "show contact",
+      "description": "Display contact information",
+      "emoji": "📧",
+      "markdown": "contact.md",
+      "category": "info",
+      "order": 3
+    }
+  ]
+}
+
