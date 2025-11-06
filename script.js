@@ -480,7 +480,6 @@ const commandStructure = {
   clear: { handler: 'clear', desc: 'Clear the terminal output', category: 'system' },
   help: { handler: 'help', desc: 'Show available commands and shortcuts', category: 'system' },
   theme: { handler: 'theme', desc: 'Change the accent color theme [purple|cyan|green|orange]', category: 'system' },
-  reload: { handler: 'reload', desc: 'Reload configuration from config.json and update banner', category: 'system' },
 };
 
 /* Command descriptions for backward compatibility */
@@ -488,7 +487,7 @@ const commandDescriptions = {
   clear: 'Clear the terminal output',
   help: 'Show available commands and shortcuts',
   theme: 'Change the accent color theme',
-  reload: 'Reload configuration from config.json and update banner',
+  'set theme': 'Change the accent color theme',
 };
 
 /* Command emojis - populated from config */
@@ -496,7 +495,6 @@ const commandEmojis = {
   theme: '🎨',
   clear: '🧹',
   help: '❓',
-  reload: '🔄',
   'set theme': '🎨'
 };
 
@@ -558,37 +556,6 @@ const commandHandlers = {
     }
     setAccent(color);
     echoSuccess(`Accent theme set to ${color}`, `The terminal accent color has been updated.`);
-  },
-  
-  async reload() {
-    echoInfo('Reloading configuration...');
-    
-    // Ensure figlet is loaded
-    if (!window.figlet) {
-      let figletCheckAttempts = 0;
-      while (!window.figlet && figletCheckAttempts < 50) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        figletCheckAttempts++;
-      }
-    }
-    
-    // Configure figlet font path if available
-    if (window.figlet && window.figlet.defaults) {
-      window.figlet.defaults({
-        fontPath: 'https://cdn.jsdelivr.net/npm/figlet@1.7.0/fonts'
-      });
-    }
-    
-    await loadExternalConfig();
-    applyBannerSize();
-    setAccent(CONFIG.defaultAccent);
-    
-    // Clear and re-render banner with new config
-    clearOutput();
-    if (CONFIG.showBannerOnLoad) {
-      await renderConfiguredBanner();
-    }
-    echoSuccess('Configuration reloaded', 'Banner and settings have been updated.');
   },
 };
 
@@ -1068,6 +1035,14 @@ paletteEl.addEventListener('click', (e) => {
 });
 
 document.getElementById('app').addEventListener('click', () => inputEl.focus());
+
+/* Ensure input always stays in focus */
+inputEl.addEventListener('blur', () => {
+  // Only refocus if palette is not open
+  if (paletteEl.hidden) {
+    requestAnimationFrame(() => inputEl.focus());
+  }
+});
 
 /* Deep links */
 window.addEventListener('load', async () => {
