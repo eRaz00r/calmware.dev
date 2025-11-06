@@ -523,25 +523,25 @@ const commandHandlers = {
     const commandsList = commands.map(cmd => {
       const desc = commandDescriptions[cmd] || 'No description available';
       const emoji = commandEmojis[cmd] || '▪️';
-      return `<div style="margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-        <span style="font-size: 1.1em;">${emoji}</span>
-        <span class="accent">${cmd}</span>
-        <span class="dim">${desc}</span>
-      </div>`;
+      return `<div class="help-command-group">
+        <span class="help-emoji" style="font-size: 1.1em;">${emoji}</span>
+        <span class="help-command accent">${cmd}</span>
+      </div>
+      <div class="help-desc dim">${desc}</div>`;
     }).join('');
     
     echo(
-      `<div>
+      `<div class="help-menu">
         <div class="dim" style="margin-bottom: 12px;">Commands:</div>
-        ${commandsList}
+        <div class="help-commands-list">${commandsList}</div>
         <div class="dim" style="margin-top: 16px; margin-bottom: 8px;">Shortcuts:</div>
-        <div style="line-height: 1.8;">
-          <div><span class="kbd">⌘/Ctrl</span> + <span class="kbd">K</span>  <span class="dim">Open command palette</span></div>
-          <div><span class="kbd">Ctrl+C</span>  <span class="dim">Cancel current operation</span></div>
-          <div><span class="kbd">Ctrl+L</span>  <span class="dim">Clear terminal</span></div>
-          <div><span class="kbd">↑/↓</span>  <span class="dim">Navigate command history</span></div>
-          <div><span class="kbd">Tab</span>  <span class="dim">Autocomplete command</span></div>
-          <div><span class="kbd">Esc</span>  <span class="dim">Close palette</span></div>
+        <div class="help-shortcuts-list" style="line-height: 1.8;">
+          <div class="help-shortcut-item"><span class="kbd">⌘/Ctrl</span> + <span class="kbd">K</span>  <span class="dim">Open command palette</span></div>
+          <div class="help-shortcut-item"><span class="kbd">Ctrl+C</span>  <span class="dim">Cancel current operation</span></div>
+          <div class="help-shortcut-item"><span class="kbd">Ctrl+L</span>  <span class="dim">Clear terminal</span></div>
+          <div class="help-shortcut-item"><span class="kbd">↑/↓</span>  <span class="dim">Navigate command history</span></div>
+          <div class="help-shortcut-item"><span class="kbd">Tab</span>  <span class="dim">Autocomplete command</span></div>
+          <div class="help-shortcut-item"><span class="kbd">Esc</span>  <span class="dim">Close palette</span></div>
         </div>
       </div>`
     );

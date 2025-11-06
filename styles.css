@@ -63,6 +63,18 @@ body::before {
   position: relative;
   max-width: 960px;
   margin: 6vh auto;
+  margin: 6svh auto;
+  margin: 6dvh auto;
+  margin-inline: auto;
+  margin-block: clamp(24px, 6vh, 96px);
+  margin-block: clamp(24px, 6svh, 96px);
+  margin-block: clamp(24px, 6dvh, 96px);
+  margin-block-start: max(clamp(24px, 6vh, 96px), calc(env(safe-area-inset-top, 0px) + 16px));
+  margin-block-start: max(clamp(24px, 6svh, 96px), calc(env(safe-area-inset-top, 0px) + 16px));
+  margin-block-start: max(clamp(24px, 6dvh, 96px), calc(env(safe-area-inset-top, 0px) + 16px));
+  margin-block-end: max(clamp(24px, 6vh, 96px), calc(env(safe-area-inset-bottom, 0px) + 16px));
+  margin-block-end: max(clamp(24px, 6svh, 96px), calc(env(safe-area-inset-bottom, 0px) + 16px));
+  margin-block-end: max(clamp(24px, 6dvh, 96px), calc(env(safe-area-inset-bottom, 0px) + 16px));
   background: linear-gradient(180deg, var(--glass-bg), rgba(14, 20, 27, 0.88));
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
@@ -72,6 +84,7 @@ body::before {
               0 20px 60px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   z-index: 1;
+  padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
 }
 
 .window-chrome {
@@ -136,7 +149,11 @@ body::before {
 
 #output {
   min-height: 40vh;
+  min-height: 40svh;
+  min-height: 40dvh;
   max-height: 70vh;
+  max-height: 70svh;
+  max-height: 70dvh;
   overflow-y: auto;
   padding-bottom: 12px;
 }
@@ -162,6 +179,12 @@ body::before {
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: all 0.2s;
+}
+
+.line a:focus-visible {
+  outline: 2px solid rgba(155, 135, 245, 0.4);
+  outline-offset: 2px;
+  border-bottom-color: var(--accent);
 }
 
 .line a:hover {
@@ -355,6 +378,9 @@ body::before {
   display: grid;
   place-items: start center;
   padding-top: 10vh;
+  padding-top: 10svh;
+  padding-top: max(10dvh, calc(env(safe-area-inset-top, 0px) + 12px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(12px);
   z-index: 1000;
@@ -386,6 +412,7 @@ body::before {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
               0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   animation: paletteSlideUp 0.3s ease-out;
+  margin-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @keyframes paletteSlideUp {
@@ -416,11 +443,18 @@ body::before {
   background: rgba(0, 0, 0, 0.4);
 }
 
+#palette-input:focus-visible {
+  outline: 2px solid rgba(155, 135, 245, 0.4);
+  outline-offset: 2px;
+}
+
 #palette-list {
   margin: 0;
   padding: 8px;
   list-style: none;
   max-height: 60vh;
+  max-height: 60svh;
+  max-height: 60dvh;
   overflow-y: auto;
 }
 
@@ -448,6 +482,11 @@ body::before {
   cursor: pointer;
   transition: all 0.15s ease;
   position: relative;
+}
+
+.palette-item:focus-visible {
+  outline: 2px solid rgba(155, 135, 245, 0.4);
+  outline-offset: 2px;
 }
 
 .palette-item:not(.palette-category):not(.palette-empty):hover {
@@ -700,11 +739,31 @@ body::before {
 }
 
 
+/* Help Menu - Desktop styles (default) */
+.help-command-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.help-command-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.help-shortcuts-list {
+  line-height: 1.8;
+}
+
 /* Tablet breakpoint (641px - 768px) */
 @media (max-width: 768px) {
   .terminal {
     max-width: calc(100% - 24px);
     margin: 4vh auto;
+    margin: 4svh auto;
+    margin: 4dvh auto;
     border-radius: 12px;
   }
   
@@ -713,20 +772,33 @@ body::before {
   }
   
   .palette {
-    padding-top: 8vh;
+    padding-top: max(8vh, calc(env(safe-area-inset-top, 0px) + 12px));
+    padding-top: max(8svh, calc(env(safe-area-inset-top, 0px) + 12px));
+    padding-top: max(8dvh, calc(env(safe-area-inset-top, 0px) + 12px));
   }
 }
 
 /* Mobile breakpoint (≤640px) */
 @media (max-width: 640px) {
+  /* Base font size reduction for mobile */
+  html {
+    font-size: 87.5%; /* 14px base instead of 16px - reduces all rem-based sizes by ~12.5% */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
   /* Terminal Container */
   .terminal {
     max-width: 100%;
     margin: 2vh 8px;
+    margin: 2svh 8px;
+    margin: 2dvh 8px;
+    margin-top: max(2dvh, calc(env(safe-area-inset-top, 0px) + 8px));
+    margin-bottom: max(2dvh, calc(env(safe-area-inset-bottom, 0px) + 12px));
     border-radius: 12px;
-    box-shadow: 0 4px 20px var(--shadow),
+    box-shadow: 0 2px 14px var(--shadow),
                 0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-                0 10px 30px rgba(0, 0, 0, 0.4);
+                0 6px 18px rgba(0, 0, 0, 0.35);
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
   }
   
   .terminal-content {
@@ -796,7 +868,11 @@ body::before {
   /* Output Area */
   #output {
     min-height: 35vh;
+    min-height: 35svh;
+    min-height: 35dvh;
     max-height: 65vh;
+    max-height: 65svh;
+    max-height: 65dvh;
     padding-bottom: 8px;
     overflow-x: hidden;
     word-wrap: break-word;
@@ -847,7 +923,9 @@ body::before {
   
   /* Command Palette Mobile Enhancements */
   .palette {
-    padding-top: 5vh;
+    padding-top: max(5vh, calc(env(safe-area-inset-top, 0px) + 8px));
+    padding-top: max(5svh, calc(env(safe-area-inset-top, 0px) + 8px));
+    padding-top: max(5dvh, calc(env(safe-area-inset-top, 0px) + 8px));
     padding-left: 8px;
     padding-right: 8px;
   }
@@ -867,6 +945,8 @@ body::before {
   #palette-list {
     padding: 6px;
     max-height: 65vh;
+    max-height: 65svh;
+    max-height: 65dvh;
   }
   
   .palette-item {
@@ -919,6 +999,7 @@ body::before {
     padding: 8px 10px;
     gap: 6px;
     flex-wrap: wrap;
+    row-gap: 4px;
   }
   
   .command-block .timestamp {
@@ -928,6 +1009,7 @@ body::before {
   .command-block .command-text {
     font-size: clamp(0.875rem, 3.5vw, 1rem);
     word-break: break-word;
+    line-height: 1.4;
   }
   
   .output-block {
@@ -952,7 +1034,7 @@ body::before {
   .line a {
     min-height: 44px;
     display: inline-block;
-    padding: 2px 0;
+    padding: 4px 0;
     word-break: break-word;
   }
   
@@ -966,20 +1048,106 @@ body::before {
     font-size: clamp(0.8rem, 3vw, 0.9em);
   }
   
+  /* Help Menu Grid Layout for Mobile */
+  .help-menu {
+    width: 100%;
+  }
+  
+  .help-commands-list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 12px;
+    align-items: start;
+  }
+  
+  /* Group emoji and command together in first column */
+  .help-command-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  
+  .help-emoji {
+    font-size: clamp(0.9em, 2.8vw, 1em) !important;
+    flex-shrink: 0;
+  }
+  
+  .help-command {
+    white-space: nowrap;
+  }
+  
+  .help-desc {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-width: 0; /* Allow text to wrap */
+    line-height: 1.5;
+  }
+  
+  /* Shortcuts - keep as block but ensure wrapping */
+  .help-shortcuts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  
+  .help-shortcut-item {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.6;
+  }
+  
   /* Prevent horizontal scrolling */
   body {
     overflow-x: hidden;
   }
-  
-  html {
-    overflow-x: hidden;
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .banner {
+    font-size: clamp(5px, 1vw, 8px);
+    margin-bottom: 8px;
+  }
+
+  #output {
+    min-height: 30vh;
+    min-height: 30svh;
+    min-height: 30dvh;
+    max-height: 55vh;
+    max-height: 55svh;
+    max-height: 55dvh;
+  }
+
+  #palette-list {
+    max-height: 55vh;
+    max-height: 55svh;
+    max-height: 55dvh;
+  }
+
+  .scanlines {
+    opacity: 0.2;
+  }
+
+  .palette {
+    padding-top: max(4vh, calc(env(safe-area-inset-top, 0px) + 8px));
+    padding-top: max(4svh, calc(env(safe-area-inset-top, 0px) + 8px));
+    padding-top: max(4dvh, calc(env(safe-area-inset-top, 0px) + 8px));
   }
 }
 
 /* Very small phones (< 375px) */
 @media (max-width: 374px) {
+  /* Further reduce base font size for very small phones */
+  html {
+    font-size: 81.25%; /* 13px base - reduces all rem-based sizes by ~18.75% */
+  }
+  
   .terminal {
     margin: 1vh 4px;
+    margin: 1svh 4px;
+    margin: 1dvh 4px;
+    margin-top: max(1dvh, calc(env(safe-area-inset-top, 0px) + 6px));
+    margin-bottom: max(1dvh, calc(env(safe-area-inset-bottom, 0px) + 8px));
     border-radius: 10px;
   }
   
@@ -1028,7 +1196,9 @@ body::before {
   }
   
   .palette {
-    padding-top: 3vh;
+    padding-top: max(3vh, calc(env(safe-area-inset-top, 0px) + 6px));
+    padding-top: max(3svh, calc(env(safe-area-inset-top, 0px) + 6px));
+    padding-top: max(3dvh, calc(env(safe-area-inset-top, 0px) + 6px));
     padding-left: 4px;
     padding-right: 4px;
   }
