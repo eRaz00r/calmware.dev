@@ -123,6 +123,13 @@ function echoBanner() {
   echo(`<pre class="banner" aria-hidden="true">${escapeHTML(content)}</pre>`);
 }
 
+function echoWelcomeBox() {
+  echo(`<div class="welcome-box" role="status">
+    <span class="welcome-icon" aria-hidden="true">✦</span>
+    <span class="welcome-message">Welcome to Calmware</span>
+  </div>`);
+}
+
 /* ASCII Banner Generation */
 const bannerFontState = { loaded: false, name: null };
 
@@ -196,6 +203,7 @@ function echoAsciiBannerFromText(text, fontName) {
 }
 
 async function renderConfiguredBanner() {
+  echoWelcomeBox();
   // Priority: bannerText (ASCII) > bannerContent (raw ASCII) > built-in BANNER
   if (CONFIG.bannerText && window.figlet && CONFIG.bannerAsciiFont) {
     try {
