@@ -901,7 +901,7 @@ body::before {
   /* Input Field - Touch Optimization */
   #input {
     padding: 10px 8px;
-    font-size: clamp(0.875rem, 3.5vw, 1rem);
+    font-size: 16px; /* Fixed 16px to prevent mobile zoom */
     min-height: 44px;
   }
   
@@ -938,7 +938,7 @@ body::before {
   
   #palette-input {
     padding: 14px 16px;
-    font-size: 1rem;
+    font-size: 16px; /* Fixed 16px to prevent mobile zoom */
     min-height: 48px;
   }
   
@@ -1209,7 +1209,7 @@ body::before {
   
   #palette-input {
     padding: 12px 14px;
-    font-size: 0.95rem;
+    font-size: 16px; /* Fixed 16px to prevent mobile zoom */
   }
   
   .palette-item {

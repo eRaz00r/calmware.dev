@@ -6,7 +6,7 @@ const CONFIG = {
   bannerAsciiFont: 'ANSI Shadow',
   bannerSize: { min: '12px', vw: '2.4vw', max: '20px' },
   showBannerOnLoad: true,
-  themeMap: { purple: '#9b87f5', cyan: '#7cd4ff', green: '#7bd88f' }
+  themeMap: { purple: '#9b87f5', cyan: '#7cd4ff', green: '#7bd88f', orange: '#f97316' }
 };
 
 async function loadExternalConfig() {
@@ -26,9 +26,17 @@ async function loadExternalConfig() {
     }
     const incoming = await res.json();
     if (incoming && typeof incoming === 'object') {
-      if (incoming.themeMap) Object.assign(CONFIG.themeMap, incoming.themeMap);
-      if (incoming.bannerSize) Object.assign(CONFIG.bannerSize, incoming.bannerSize);
-      Object.assign(CONFIG, incoming);
+      const { themeMap, bannerSize, ...rest } = incoming;
+
+      if (themeMap && typeof themeMap === 'object') {
+        CONFIG.themeMap = { ...CONFIG.themeMap, ...themeMap };
+      }
+
+      if (bannerSize && typeof bannerSize === 'object') {
+        CONFIG.bannerSize = { ...CONFIG.bannerSize, ...bannerSize };
+      }
+
+      Object.assign(CONFIG, rest);
       console.log('Config loaded:', CONFIG);
       // Register commands from config
       registerCommandsFromConfig();
@@ -408,7 +416,7 @@ function registerCommandsFromConfig() {
   if (!CONFIG.commands || !Array.isArray(CONFIG.commands)) return;
   
   CONFIG.commands.forEach(cmdConfig => {
-    const { name, description, emoji, markdown, category, order } = cmdConfig;
+    const { name, description, emoji, markdown, category } = cmdConfig;
     if (!name || !markdown) return; // Skip invalid entries
     
     const cmdName = name.toLowerCase().trim();
@@ -417,10 +425,6 @@ function registerCommandsFromConfig() {
     // Register emoji and description
     if (emoji) commandEmojis[cmdName] = emoji;
     if (description) commandDescriptions[cmdName] = description;
-    // Register order (if provided, otherwise use a high number so unordered commands appear last)
-    if (typeof order === 'number') {
-      commandOrder[cmdName] = order;
-    }
     
     // Register handler
     commandHandlers[cmdName] = async () => {
@@ -463,85 +467,57 @@ function setAccent(name) {
 /* Command structure - verb-noun hierarchy */
 const commandStructure = {
   set: {
-    theme: { handler: 'set theme', desc: 'Change the accent color theme [purple|cyan|green]', category: 'system', flags: { '--color': '-c', '--theme': '-t' } },
+    theme: { handler: 'theme', desc: 'Change the accent color theme [purple|cyan|green|orange]', category: 'system', flags: { '--color': '-c', '--theme': '-t' } },
   },
   clear: { handler: 'clear', desc: 'Clear the terminal output', category: 'system' },
   help: { handler: 'help', desc: 'Show available commands and shortcuts', category: 'system' },
+  theme: { handler: 'theme', desc: 'Change the accent color theme [purple|cyan|green|orange]', category: 'system' },
+  reload: { handler: 'reload', desc: 'Reload configuration from config.json and update banner', category: 'system' },
 };
 
 /* Command descriptions for backward compatibility */
 const commandDescriptions = {
   clear: 'Clear the terminal output',
   help: 'Show available commands and shortcuts',
-  'set theme': 'Change the accent color theme',
+  theme: 'Change the accent color theme',
+  reload: 'Reload configuration from config.json and update banner',
 };
 
 /* Command emojis - populated from config */
 const commandEmojis = {
+  theme: '🎨',
   clear: '🧹',
   help: '❓',
+  reload: '🔄',
   'set theme': '🎨'
 };
-
-/* Command order - populated from config, lower numbers appear first */
-const commandOrder = {};
-
-function sortCommandsByOrder(commands) {
-  return commands.sort((a, b) => {
-    const hasOrderA = commandOrder[a] !== undefined;
-    const hasOrderB = commandOrder[b] !== undefined;
-    
-    // System commands (no order) come first, alphabetically
-    if (!hasOrderA && !hasOrderB) {
-      return a.localeCompare(b);
-    }
-    
-    // System commands (no order) come before config commands (with order)
-    if (!hasOrderA && hasOrderB) {
-      return -1;
-    }
-    if (hasOrderA && !hasOrderB) {
-      return 1;
-    }
-    
-    // Both have order: sort by order value (lower first)
-    const orderA = commandOrder[a];
-    const orderB = commandOrder[b];
-    if (orderA !== orderB) {
-      return orderA - orderB;
-    }
-    
-    // If same order, sort alphabetically
-    return a.localeCompare(b);
-  });
-}
 
 /* Command handlers */
 const commandHandlers = {
   help() {
-    const commands = sortCommandsByOrder(Object.keys(commandHandlers));
+    const commands = Object.keys(commandHandlers).sort();
     const commandsList = commands.map(cmd => {
       const desc = commandDescriptions[cmd] || 'No description available';
       const emoji = commandEmojis[cmd] || '▪️';
-      return `<div class="help-command-group">
-        <span class="help-emoji" style="font-size: 1.1em;">${emoji}</span>
-        <span class="help-command accent">${cmd}</span>
-      </div>
-      <div class="help-desc dim">${desc}</div>`;
+      return `<div style="margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 1.1em;">${emoji}</span>
+        <span class="accent">${cmd}</span>
+        <span class="dim">${desc}</span>
+      </div>`;
     }).join('');
     
     echo(
-      `<div class="help-menu">
+      `<div>
         <div class="dim" style="margin-bottom: 12px;">Commands:</div>
-        <div class="help-commands-list">${commandsList}</div>
+        ${commandsList}
         <div class="dim" style="margin-top: 16px; margin-bottom: 8px;">Shortcuts:</div>
-        <div class="help-shortcuts-list" style="line-height: 1.8;">
-          <div class="help-shortcut-item"><span class="kbd">⌘/Ctrl</span> + <span class="kbd">K</span>  <span class="dim">Open command palette</span></div>
-          <div class="help-shortcut-item"><span class="kbd">Ctrl+C</span>  <span class="dim">Cancel current operation</span></div>
-          <div class="help-shortcut-item"><span class="kbd">Ctrl+L</span>  <span class="dim">Clear terminal</span></div>
-          <div class="help-shortcut-item"><span class="kbd">↑/↓</span>  <span class="dim">Navigate command history</span></div>
-          <div class="help-shortcut-item"><span class="kbd">Tab</span>  <span class="dim">Autocomplete command</span></div>
-          <div class="help-shortcut-item"><span class="kbd">Esc</span>  <span class="dim">Close palette</span></div>
+        <div style="line-height: 1.8;">
+          <div><span class="kbd">⌘/Ctrl</span> + <span class="kbd">K</span>  <span class="dim">Open command palette</span></div>
+          <div><span class="kbd">Ctrl+C</span>  <span class="dim">Cancel current operation</span></div>
+          <div><span class="kbd">Ctrl+L</span>  <span class="dim">Clear terminal</span></div>
+          <div><span class="kbd">↑/↓</span>  <span class="dim">Navigate command history</span></div>
+          <div><span class="kbd">Tab</span>  <span class="dim">Autocomplete command</span></div>
+          <div><span class="kbd">Esc</span>  <span class="dim">Close palette</span></div>
         </div>
       </div>`
     );
@@ -553,6 +529,17 @@ const commandHandlers = {
     applyBannerSize(); // Ensure CSS variables are set when banner is re-rendered
     renderConfiguredBanner();
   },
+
+  theme(_, arg) {
+    const color = (arg || '').toLowerCase();
+    if (!CONFIG.themeMap || !CONFIG.themeMap[color]) {
+      const validColors = Object.keys(CONFIG.themeMap || {}).join('|');
+      echoError('Invalid theme color', `Usage: theme [${validColors}] or set theme [${validColors}]`);
+      return;
+    }
+    setAccent(color);
+    echoSuccess(`Accent theme set to ${color}`, `The terminal accent color has been updated.`);
+  },
   
   'set theme'(_, ...args) {
     const color = (args[0] || '').toLowerCase();
@@ -563,6 +550,37 @@ const commandHandlers = {
     }
     setAccent(color);
     echoSuccess(`Accent theme set to ${color}`, `The terminal accent color has been updated.`);
+  },
+  
+  async reload() {
+    echoInfo('Reloading configuration...');
+    
+    // Ensure figlet is loaded
+    if (!window.figlet) {
+      let figletCheckAttempts = 0;
+      while (!window.figlet && figletCheckAttempts < 50) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        figletCheckAttempts++;
+      }
+    }
+    
+    // Configure figlet font path if available
+    if (window.figlet && window.figlet.defaults) {
+      window.figlet.defaults({
+        fontPath: 'https://cdn.jsdelivr.net/npm/figlet@1.7.0/fonts'
+      });
+    }
+    
+    await loadExternalConfig();
+    applyBannerSize();
+    setAccent(CONFIG.defaultAccent);
+    
+    // Clear and re-render banner with new config
+    clearOutput();
+    if (CONFIG.showBannerOnLoad) {
+      await renderConfiguredBanner();
+    }
+    echoSuccess('Configuration reloaded', 'Banner and settings have been updated.');
   },
 };
 
@@ -926,15 +944,12 @@ function renderPalette(items, activeIndex = 0, query = '') {
     const categoryItems = categorized[category];
     if (categoryItems.length === 0) return;
     
-    // Sort items within category by order
-    const sortedCategoryItems = sortCommandsByOrder(categoryItems);
-    
     const categoryHeader = document.createElement('li');
     categoryHeader.className = 'palette-category';
     categoryHeader.textContent = category.charAt(0).toUpperCase() + category.slice(1);
     paletteListEl.appendChild(categoryHeader);
     
-    sortedCategoryItems.forEach((item, i) => {
+    categoryItems.forEach((item, i) => {
       const li = document.createElement('li');
       li.className = 'palette-item';
       li.role = 'option';

@@ -12,7 +12,8 @@
   "themeMap": {
     "purple": "#9b87f5",
     "cyan": "#7cd4ff",
-    "green": "#7bd88f"
+    "green": "#7bd88f",
+    "orange": "#f97316"
   },
   "content": {
     "dir": "content",
