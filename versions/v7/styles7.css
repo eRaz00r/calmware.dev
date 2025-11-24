@@ -1,0 +1,255 @@
+/* HYPER-KINETIC ACID GLITCH THEME */
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Syncopate:wght@700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --acid: #ccff00;
+  --neon-pink: #ff00ff;
+  --cyber-black: #050505;
+  --noise: url('data:image/svg+xml;charset=utf-8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.15"/%3E%3C/svg%3E');
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--cyber-black);
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  margin: 0;
+  overflow-x: hidden;
+  background-image: var(--noise);
+}
+
+/* Marquee Banner */
+.marquee-container {
+  background: var(--acid);
+  color: var(--cyber-black);
+  padding: 1rem 0;
+  overflow: hidden;
+  transform: rotate(-2deg) scale(1.05);
+  border-top: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  margin-bottom: 4rem;
+}
+
+.marquee-content {
+  white-space: nowrap;
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.layout {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Glitch Header */
+h1 {
+  font-family: 'Rubik Glitch', system-ui;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.8;
+  margin: 0;
+  color: #fff;
+  text-transform: uppercase;
+  position: relative;
+  animation: shake 2s infinite;
+}
+
+h1::before, h1::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+}
+
+h1::before {
+  color: var(--acid);
+  z-index: -1;
+  transform: translate(-4px, -4px);
+}
+
+h1::after {
+  color: var(--neon-pink);
+  z-index: -2;
+  transform: translate(4px, 4px);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(2px, 2px) rotate(1deg); }
+  50% { transform: translate(-2px, -2px) rotate(-1deg); }
+  75% { transform: translate(-2px, 2px) rotate(0deg); }
+}
+
+.tagline {
+  background: #fff;
+  color: #000;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transform: skew(-10deg);
+  margin-top: 2rem;
+  border: 2px solid var(--neon-pink);
+}
+
+/* Brutal Sections */
+section {
+  margin: 6rem 0;
+  position: relative;
+}
+
+h2 {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 3rem;
+  color: var(--acid);
+  text-transform: uppercase;
+  border-bottom: 4px solid var(--acid);
+  line-height: 1;
+  margin-bottom: 3rem;
+  text-shadow: 4px 4px 0 var(--neon-pink);
+}
+
+/* Tickets / Pricing */
+.glitch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.glitch-card {
+  border: 2px solid #fff;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  transition: 0.2s;
+}
+
+.glitch-card:hover {
+  background: #fff;
+  color: #000;
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 10px 10px 0 var(--acid);
+  z-index: 10;
+}
+
+.glitch-card h3 {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+}
+
+.price-sticker {
+  position: absolute;
+  top: -1.5rem;
+  right: -1rem;
+  background: var(--neon-pink);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  transform: rotate(5deg);
+  box-shadow: 4px 4px 0 #000;
+}
+
+/* Micro Tasks: Chaos Layout */
+.chaos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.chaos-item {
+  background: var(--acid);
+  color: #000;
+  padding: 1.5rem;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+  border: 3px solid #000;
+}
+
+.chaos-item:nth-child(1) { transform: rotate(-3deg); }
+.chaos-item:nth-child(2) { transform: rotate(2deg) translateY(20px); background: var(--neon-pink); color: #fff; }
+.chaos-item:nth-child(3) { transform: rotate(-5deg); }
+
+/* Support: Inverted */
+.invert-section {
+  background: #fff;
+  color: #000;
+  padding: 3rem;
+  transform: skewY(-2deg);
+  border: 4px solid var(--cyber-black);
+}
+
+.invert-section h2 {
+  color: #000;
+  border-color: #000;
+  text-shadow: 4px 4px 0 var(--acid);
+}
+
+.support-price {
+  font-size: 4rem;
+  font-weight: 900;
+  font-family: 'Syncopate';
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+/* Warranty: Terminal Glitch */
+.warranty-box {
+  background: #000;
+  border: 1px solid var(--acid);
+  padding: 2rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9rem;
+  box-shadow: -10px 10px 0 rgba(204, 255, 0, 0.2);
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1.2em;
+  background: var(--acid);
+  animation: blink 0.1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.yes-list { color: var(--acid); }
+.no-list { color: var(--neon-pink); text-decoration: line-through; }
+
+/* Footer */
+footer {
+  margin-top: 8rem;
+  text-align: center;
+  padding: 4rem;
+  background: var(--neon-pink);
+  color: #fff;
+  font-family: 'Syncopate';
+  font-weight: bold;
+}
+
+/* Image Glitch Effect on hover (applied to text blocks) */
+.glitch-text:hover {
+  animation: glitch-anim 0.3s infinite;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+

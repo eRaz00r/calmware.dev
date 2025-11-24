@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calmware — Motion Experience</title>
+    <link rel="stylesheet" href="styles15.css">
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="canvas-bg"></canvas>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <div class="viewport">
+        
+        <!-- HERO -->
+        <section class="hero">
+            <div class="u-overflow-hidden">
+                <h1>
+                    CALMWARE
+                    <span class="fill-text">CALMWARE</span>
+                </h1>
+            </div>
+            <div class="u-overflow-hidden" style="margin-top: 1rem;">
+                <h1 style="-webkit-text-stroke: 0; font-size: clamp(2rem, 6vw, 4rem); font-weight: 300;">
+                    ONE-MAN AI STUDIO
+                </h1>
+            </div>
+            
+            <div class="hero-sub reveal-block">
+                Fast, clear, reliable app development powered by AI-assisted coding. No bloat. No surprises.
+            </div>
+
+            <div style="margin-top: 4rem;" class="magnetic-wrap">
+                <a href="mailto:hello@calmware.dev" class="btn-primary hover-trigger">Start Project</a>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section>
+            <span class="card-num">01 // SERVICES</span>
+            <div class="grid-2">
+                <div class="card hover-trigger">
+                    <h3>Feature Bounties</h3>
+                    <p>Fixed-price, scoped work. You know exactly what you get and what it costs.</p>
+                </div>
+                <div class="card hover-trigger">
+                    <h3>Micro-Tasks</h3>
+                    <p>Quick fixes for small issues. Packs available for ongoing maintenance.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section>
+            <span class="card-num">02 // PRICING</span>
+            <h2>Transparent Costs</h2>
+            
+            <div class="price-list">
+                <div class="price-row hover-trigger">
+                    <span>Small Feature</span>
+                    <span class="price-val">£100 — £150</span>
+                </div>
+                <div class="price-row hover-trigger">
+                    <span>Medium Feature</span>
+                    <span class="price-val">£200 — £350</span>
+                </div>
+                <div class="price-row hover-trigger">
+                    <span>Large Feature</span>
+                    <span class="price-val">£400 — £750</span>
+                </div>
+                <div class="price-row hover-trigger">
+                    <span>Micro-Task Pack (x5)</span>
+                    <span class="price-val">£120</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- WARRANTY -->
+        <section>
+            <span class="card-num">03 // WARRANTY</span>
+            <div class="grid-2">
+                <div>
+                    <h2>14-Day<br>Protection</h2>
+                    <p>Every line of code I ship comes with a 14-day bug fix warranty. If it breaks because of me, I fix it for free.</p>
+                </div>
+                <div class="card hover-trigger" style="border-color: #fff;">
+                    <h3>Guaranteed Quality</h3>
+                    <ul style="list-style: none; padding: 0; line-height: 2;">
+                        <li>+ Bug Fixes</li>
+                        <li>+ Scope Assurance</li>
+                        <li>+ Video Demos</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="magnetic-wrap">
+                <a href="#" class="hover-trigger" style="color: #fff; text-decoration: none; font-size: 1.5rem;">hello@calmware.dev</a>
+            </div>
+            <div>© 2025 Chris Farrugia</div>
+        </footer>
+
+    </div>
+
+    <!-- LOGIC -->
+    <script>
+        // 1. CANVAS BACKGROUND (Liquid Noise Effect)
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if(this.x < 0 || this.x > width) this.vx *= -1;
+                if(this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for(let i=0; i<100; i++) particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            // Connect particles
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            for(let i=0; i<particles.length; i++) {
+                for(let j=i; j<particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if(dist < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        initParticles();
+        animateCanvas();
+
+
+        // 2. PHYSICS CURSOR
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        
+        let mouse = { x: 0, y: 0 };
+        let dotPos = { x: 0, y: 0 };
+        let ringPos = { x: 0, y: 0 };
+
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            
+            // Immediate dot update
+            dot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%, -50%)`;
+        });
+
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
+        }
+
+        function animateCursor() {
+            // Smooth ring
+            ringPos.x = lerp(ringPos.x, mouse.x, 0.15);
+            ringPos.y = lerp(ringPos.y, mouse.y, 0.15);
+            
+            ring.style.transform = `translate(${ringPos.x}px, ${ringPos.y}px) translate(-50%, -50%)`;
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover States
+        document.querySelectorAll('.hover-trigger').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('is-hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('is-hovering'));
+        });
+
+
+        // 3. MAGNETIC BUTTONS
+        document.querySelectorAll('.magnetic-wrap').forEach(wrap => {
+            wrap.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                this.children[0].style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+            });
+            
+            wrap.addEventListener('mouseleave', function() {
+                this.children[0].style.transform = 'translate(0, 0)';
+            });
+        });
+
+
+        // 4. SCROLL REVEALS (IntersectionObserver)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('h1, h2, .card, .price-row').forEach(el => observer.observe(el));
+
+        // Split Text for Hero
+        const subText = document.querySelector('.hero-sub');
+        const textContent = subText.textContent;
+        subText.innerHTML = '';
+        textContent.split('').forEach((char, i) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.className = 'char';
+            span.style.transitionDelay = `${i * 10}ms`;
+            subText.appendChild(span);
+            
+            setTimeout(() => span.classList.add('in-view'), 100 + (i * 10));
+        });
+
+        // Animate H1 on load
+        setTimeout(() => {
+            document.querySelector('h1').classList.add('in-view');
+        }, 500);
+
+    </script>
+
+</body>
+</html>
+

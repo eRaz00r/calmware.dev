@@ -1,0 +1,204 @@
+/* Neo-Brutalist 22: Pop Memphis */
+/* Vibrant colors, geometric shapes, high energy */
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@600&family=Space+Grotesk:wght@400;700&display=swap');
+
+:root {
+    --yellow: #FFD600;
+    --pink: #FF00D6;
+    --cyan: #00FFFF;
+    --black: #000000;
+    --white: #FFFFFF;
+    --shadow: 6px 6px 0px var(--black);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--yellow);
+    color: var(--black);
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    padding: 3rem;
+    font-size: 18px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: 'Lexend Mega', sans-serif;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    line-height: 1;
+}
+
+h1 {
+    font-size: 4rem;
+    text-shadow: 4px 4px 0px var(--white);
+    margin-bottom: 3rem;
+}
+
+.highlight-span {
+    background: var(--white);
+    color: var(--black);
+    font-size: 0.4em;
+    padding: 0.5rem 1rem;
+    border: 3px solid var(--black);
+    box-shadow: 4px 4px 0px var(--black);
+    display: inline-block;
+    transform: rotate(-2deg);
+    margin-top: 1rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    background: var(--black);
+    color: var(--white);
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    transform: skew(-5deg);
+}
+
+/* Layouts */
+.intro-grid, .pricing-options, .policy-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+    .intro-grid { grid-template-columns: 1.5fr 1fr; }
+    .pricing-options { grid-template-columns: 1fr 1fr; }
+    .policy-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Components */
+.card, .price-box, .policy-box {
+    background: var(--white);
+    border: 3px solid var(--black);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    transition: transform 0.1s;
+}
+
+.card:hover, .price-box:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px var(--black);
+}
+
+.alt-card {
+    background: var(--cyan);
+}
+
+.alt-price-box {
+    background: var(--pink);
+    color: var(--white);
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--white);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    border: 3px solid var(--black);
+    box-shadow: var(--shadow);
+    margin-top: 1rem;
+    text-transform: uppercase;
+}
+
+.cta-button:hover {
+    background: var(--white);
+    color: var(--black);
+}
+
+/* Pricing Table */
+.pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3rem 0;
+    background: var(--white);
+    border: 3px solid var(--black);
+    box-shadow: var(--shadow);
+}
+
+.pricing-table th {
+    background: var(--black);
+    color: var(--white);
+    padding: 1.5rem;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.pricing-table td {
+    padding: 1.5rem;
+    border-bottom: 3px solid var(--black);
+}
+
+.pricing-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Lists & Tags */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+li::before {
+    content: "●";
+    position: absolute;
+    left: 0;
+    font-size: 0.8em;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tags-container span {
+    background: var(--black);
+    color: var(--white);
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.alert-box {
+    background: repeating-linear-gradient(
+        45deg,
+        var(--yellow),
+        var(--yellow) 10px,
+        var(--white) 10px,
+        var(--white) 20px
+    );
+    border: 3px solid var(--black);
+    padding: 1rem;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 5rem;
+    border-top: 5px solid var(--black);
+    padding-top: 2rem;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+

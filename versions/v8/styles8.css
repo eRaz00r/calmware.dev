@@ -1,0 +1,217 @@
+/* PROFESSIONAL BLACK HAT / TERMINAL THEME */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --terminal-bg: #0d0d0d;
+  --terminal-text: #a8a8a8;
+  --accent-green: #33ff00;
+  --accent-red: #ff3333;
+  --accent-cyan: #00ffff;
+  --border-color: #333;
+  --prompt: #33ff00;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+/* CRT Scanline Effect */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 999;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ASCII Header */
+.ascii-art {
+  color: var(--accent-green);
+  white-space: pre;
+  font-size: 10px;
+  line-height: 10px;
+  margin-bottom: 20px;
+  overflow-x: hidden;
+}
+
+.system-status {
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-item span {
+  color: var(--accent-green);
+}
+
+/* Terminal Window Styling */
+.terminal-window {
+  background: #000;
+  border: 1px solid var(--border-color);
+  margin-bottom: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.terminal-header {
+  background: var(--border-color);
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.control {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #555;
+}
+
+.terminal-body {
+  padding: 20px;
+}
+
+/* Typography & Elements */
+h2 {
+  font-size: 16px;
+  color: #fff;
+  margin-top: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.command-line {
+  color: var(--prompt);
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.command-line::before {
+  content: "root@calmware:~#";
+  color: var(--accent-red);
+}
+
+.output {
+  margin-bottom: 20px;
+  padding-left: 20px;
+  border-left: 2px solid var(--border-color);
+}
+
+/* Pricing Tables (Data Dump Style) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.data-table th {
+  text-align: left;
+  color: var(--accent-cyan);
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px;
+}
+
+.data-table td {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+}
+
+.data-table tr:hover td {
+  background: rgba(51, 255, 0, 0.05);
+  color: #fff;
+}
+
+/* Micro Tasks (Hex Dump Style) */
+.hex-view {
+  display: flex;
+  gap: 20px;
+  font-family: monospace;
+}
+
+.hex-addr {
+  color: var(--accent-cyan);
+}
+
+.hex-data {
+  color: var(--terminal-text);
+}
+
+.hex-ascii {
+  color: var(--accent-green);
+  border-left: 1px solid #333;
+  padding-left: 10px;
+}
+
+/* Warranty (Log File Style) */
+.log-entry {
+  margin-bottom: 5px;
+}
+
+.log-time {
+  color: #666;
+}
+
+.log-level-info { color: var(--accent-cyan); }
+.log-level-warn { color: var(--accent-red); }
+.log-level-success { color: var(--accent-green); }
+
+/* Cursor Animation */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: var(--accent-green);
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Matrix Rain Effect (Simple CSS version for background) */
+.matrix-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  opacity: 0.05;
+  background-image: linear-gradient(0deg, transparent 24%, rgba(32, 255, 77, .3) 25%, rgba(32, 255, 77, .3) 26%, transparent 27%, transparent 74%, rgba(32, 255, 77, .3) 75%, rgba(32, 255, 77, .3) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(32, 255, 77, .3) 25%, rgba(32, 255, 77, .3) 26%, transparent 27%, transparent 74%, rgba(32, 255, 77, .3) 75%, rgba(32, 255, 77, .3) 76%, transparent 77%, transparent);
+  background-size: 30px 30px;
+}
+
+a { color: var(--accent-cyan); text-decoration: none; }
+a:hover { text-decoration: underline; background: var(--accent-cyan); color: #000; }
+

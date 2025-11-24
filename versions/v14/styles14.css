@@ -1,0 +1,275 @@
+/* MOTION / INTERACTIVE THEME */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+
+:root {
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --text: #ffffff;
+  --text-muted: #9ca3af;
+  --accent: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.5);
+  
+  --cursor-size: 20px;
+  --cursor-follower-size: 40px;
+  
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+* { box-sizing: border-box; cursor: none; /* Hide default cursor */ }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+a, button, .interactive {
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.3s, height 0.3s, background 0.3s;
+}
+
+.cursor-follower {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--cursor-follower-size);
+  height: var(--cursor-follower-size);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.1s linear;
+}
+
+/* Cursor Active States */
+body.hovering .cursor {
+  width: 10px;
+  height: 10px;
+}
+
+body.hovering .cursor-follower {
+  width: 60px;
+  height: 60px;
+  border-color: var(--accent);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* LAYOUT */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+header, section, footer {
+  padding: 6rem 0;
+}
+
+/* TYPOGRAPHY with Reveal Animations */
+h1 {
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: 1;
+  margin: 0 0 2rem 0;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s var(--ease-out-expo) forwards 0.2s;
+}
+
+h2 {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+p, li {
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* CARDS & GRIDS */
+.intro-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.card {
+  background: var(--surface);
+  padding: 2.5rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+  border-color: var(--accent);
+}
+
+/* Magnetic Button */
+.cta-button {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  padding: 1.2rem 2.5rem;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.cta-button::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255,255,255,0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+}
+
+.cta-button:hover::after {
+  transform: translateX(0);
+}
+
+/* SCROLL ANIMATIONS */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s var(--ease-out-expo);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered Delays */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+
+/* TABLE STYLES (Modernized) */
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+}
+
+.pricing-table th, .pricing-table td {
+  text-align: left;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.pricing-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+
+.pricing-table tr {
+  transition: background 0.2s;
+}
+
+.pricing-table tr:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+/* MICRO TASKS GRID */
+.pricing-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.price-box {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 2rem;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.price-tag {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 1rem 0;
+}
+
+/* WARRANTY SECTION */
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+footer a {
+  color: var(--text);
+  text-decoration: none;
+  position: relative;
+}
+
+footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+  width: 100%;
+}
+
+/* KEYFRAMES */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Utility for magnetic effect target */
+.magnetic-wrap {
+  display: inline-block;
+  position: relative;
+}
+

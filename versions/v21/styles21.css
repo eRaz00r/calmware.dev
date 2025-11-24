@@ -1,0 +1,177 @@
+/* Neo-Brutalist 21: System Terminal */
+/* Stark black and white, monospaced, visible layout grids */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg: #000000;
+    --text: #00ff41; /* Phosphor green */
+    --border: 2px solid #00ff41;
+    --surface: #0a0a0a;
+    --dim: #003b00;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+    padding: 2rem;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    border: var(--border);
+    padding: 1rem;
+    position: relative;
+}
+
+.container::before {
+    content: "SYSTEM STATUS: ONLINE";
+    position: absolute;
+    top: -1.5em;
+    left: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 0.8rem;
+    padding-right: 1rem;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    text-transform: uppercase;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 3rem;
+    border-bottom: var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.highlight-span {
+    background: var(--text);
+    color: var(--bg);
+    font-size: 0.5em;
+    padding: 0.2em 0.5em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+h2 {
+    font-size: 2rem;
+    background: var(--text);
+    color: var(--bg);
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+}
+
+/* Grid Layouts */
+.intro-grid, .pricing-options, .policy-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .intro-grid { grid-template-columns: 2fr 1fr; }
+    .pricing-options { grid-template-columns: 1fr 1fr; }
+    .policy-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Components */
+.card, .price-box, .policy-box {
+    border: var(--border);
+    padding: 1.5rem;
+    background: var(--surface);
+}
+
+.alt-card, .alt-price-box {
+    border-style: dashed;
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--text);
+    color: var(--bg);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 1rem;
+    text-transform: uppercase;
+}
+
+.cta-button:hover {
+    background: var(--bg);
+    color: var(--text);
+    outline: 2px solid var(--text);
+}
+
+/* Table */
+.pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    border: var(--border);
+}
+
+.pricing-table th, .pricing-table td {
+    border: 1px solid var(--text);
+    padding: 1rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.pricing-table th {
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--text);
+}
+
+/* Lists */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li::before {
+    content: "> ";
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tags-container span {
+    border: 1px solid var(--text);
+    padding: 0.2rem 0.5rem;
+}
+
+.alert-box {
+    border: 2px solid var(--text);
+    padding: 1rem;
+    margin-top: 1rem;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--dim),
+        var(--dim) 10px,
+        var(--bg) 10px,
+        var(--bg) 20px
+    );
+}
+
+footer {
+    margin-top: 4rem;
+    border-top: var(--border);
+    padding-top: 2rem;
+    text-align: center;
+}
+

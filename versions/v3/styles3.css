@@ -1,0 +1,259 @@
+/* Modern Geeky Brutalist Theme */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=VT323&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #0f0f12;
+  --surface: #1a1a20;
+  --text: #e0e0e0;
+  --border: #444;
+  --primary: #ff00ff; /* Magenta */
+  --secondary: #00ffff; /* Cyan */
+  --tertiary: #ffff00; /* Yellow */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-pixel: 'VT323', monospace;
+  
+  --border-thick: 3px solid var(--text);
+  --shadow-hard: 6px 6px 0px var(--primary);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  margin: 0;
+  padding: 2rem;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  border: var(--border-thick);
+  background: var(--surface);
+  padding: 2rem;
+  margin-bottom: 4rem;
+  position: relative;
+  box-shadow: var(--shadow-hard);
+}
+
+header::before {
+  content: "SYSTEM.READY";
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  background: var(--secondary);
+  color: #000;
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-pixel);
+  font-size: 1.5rem;
+  border: 2px solid #000;
+  transform: rotate(2deg);
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin: 0;
+  color: var(--text);
+  text-shadow: 3px 3px 0 var(--secondary);
+}
+
+.tagline {
+  font-family: var(--font-pixel);
+  font-size: 1.5rem;
+  color: var(--tertiary);
+  margin-top: 1rem;
+  display: block;
+}
+
+/* Sections */
+section {
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  border-bottom: 4px solid var(--primary);
+  display: inline-block;
+  margin-bottom: 2rem;
+  padding-right: 2rem;
+}
+
+h2::before {
+  content: ">";
+  color: var(--primary);
+  margin-right: 0.5rem;
+}
+
+/* Cards / Boxes */
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 2px solid var(--text);
+  padding: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 4px 4px 0 var(--tertiary);
+}
+
+.card-header {
+  font-family: var(--font-pixel);
+  font-size: 1.8rem;
+  color: var(--secondary);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.price {
+  font-weight: 700;
+  font-size: 1.2rem;
+  background: var(--text);
+  color: var(--bg);
+  padding: 0.2rem 0.5rem;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+/* Micro Tasks - Terminal Style */
+.terminal-box {
+  background: #000;
+  border: 2px solid var(--border);
+  padding: 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: #0f0;
+  position: relative;
+  border-radius: 5px;
+}
+
+.terminal-box::after {
+  content: "█";
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Support Plan - Badge Style */
+.support-plan {
+  background: var(--surface);
+  border: 4px dashed var(--secondary);
+  padding: 2rem;
+  text-align: center;
+}
+
+.support-price {
+  font-size: 3rem;
+  font-family: var(--font-heading);
+  color: var(--tertiary);
+}
+
+/* Warranty Section */
+.warranty-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--text);
+  border: 2px solid var(--text);
+}
+
+.warranty-col {
+  background: var(--bg);
+  padding: 2rem;
+}
+
+.warranty-col h3 {
+  margin-top: 0;
+  font-family: var(--font-pixel);
+  font-size: 2rem;
+}
+
+.check-list li {
+  list-style: none;
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.check-list li::before {
+  content: "✓";
+  color: var(--secondary);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.x-list li {
+  list-style: none;
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #888;
+}
+
+.x-list li::before {
+  content: "×";
+  color: var(--primary);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+  font-size: 0.9rem;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-note {
+  background: var(--tertiary);
+  color: #000;
+  padding: 1rem;
+  font-weight: bold;
+  transform: rotate(-1deg);
+  max-width: 400px;
+}
+
+@media (max-width: 700px) {
+  .warranty-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+

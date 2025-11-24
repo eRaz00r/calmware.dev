@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calmware: Interactive Quest</title>
+    <link rel="stylesheet" href="styles13.css">
+</head>
+<body>
+
+    <!-- HUD (Heads Up Display) -->
+    <div class="hud-container">
+        <div class="hud-panel">
+            <div class="avatar-frame">🧙‍♂️</div>
+            <div class="stat-group">
+                <span class="stat-label">PLAYER</span>
+                <span style="font-weight:bold;">GUEST</span>
+            </div>
+        </div>
+        
+        <div class="hud-panel">
+            <div class="stat-group">
+                <span class="stat-label">XP LEVEL <span id="level-num">1</span></span>
+                <div class="xp-bar-container">
+                    <div class="xp-fill" id="xp-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hud-panel" style="margin-left: auto; border-color: var(--accent-yellow);">
+            <span style="font-size: 1.2rem;">💰</span>
+            <span class="stat-value" id="gold-display">0</span>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- HERO -->
+        <div class="hero">
+            <h1>CHOOSE YOUR<br>ADVENTURE</h1>
+            <p>Select items to build your project estimate and gain XP.</p>
+        </div>
+
+        <!-- QUEST BOARD (Features) -->
+        <div class="game-card">
+            <div class="card-header">
+                <div class="header-title">📜 QUEST BOARD</div>
+                <span style="font-size:0.8rem; color:#888;">SELECT ONE</span>
+            </div>
+            
+            <div class="quest-grid">
+                <div class="quest-item" onclick="selectQuest(this, 150, 100)">
+                    <strong>SMALL QUEST</strong>
+                    <div class="price-tag">£150</div>
+                    <div style="font-size:0.8rem; color:#666;">UI Tweaks & Simple Logic</div>
+                </div>
+
+                <div class="quest-item" onclick="selectQuest(this, 350, 250)">
+                    <strong>MEDIUM QUEST</strong>
+                    <div class="price-tag">£350</div>
+                    <div style="font-size:0.8rem; color:#666;">New Features & API Work</div>
+                </div>
+
+                <div class="quest-item" onclick="selectQuest(this, 750, 500)">
+                    <strong>EPIC QUEST</strong>
+                    <div class="price-tag">£750</div>
+                    <div style="font-size:0.8rem; color:#666;">Complex Multi-Screen Flows</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INVENTORY (Micro Tasks) -->
+        <div class="game-card">
+            <div class="card-header">
+                <div class="header-title">🎒 INVENTORY SHOP</div>
+                <span style="font-size:0.8rem; color:#888;">CLICK TO BUY</span>
+            </div>
+            
+            <div class="inventory-grid">
+                <div class="inv-slot" onclick="buyItem(30, 20, event)">
+                    <div class="inv-price">£30</div>
+                    <div class="inv-icon">🧪</div>
+                    <div class="inv-count">x1</div>
+                </div>
+                
+                <div class="inv-slot" onclick="buyItem(75, 50, event)">
+                    <div class="inv-price">£75</div>
+                    <div class="inv-icon">🧪</div>
+                    <div class="inv-count">x3</div>
+                </div>
+
+                <div class="inv-slot" onclick="buyItem(120, 80, event)">
+                    <div class="inv-price">£120</div>
+                    <div class="inv-icon">🧪</div>
+                    <div class="inv-count">x5</div>
+                </div>
+                
+                <div class="inv-slot" onclick="buyItem(250, 150, event)">
+                    <div class="inv-price">£250</div>
+                    <div class="inv-icon">🛡️</div>
+                    <div class="inv-count">SUB</div>
+                </div>
+            </div>
+
+            <!-- Feedback Box -->
+            <div id="msg-box" class="msg-box">
+                <strong>ITEM EQUIPPED!</strong><br>
+                <span style="font-size:0.9rem;">Added to your estimate.</span>
+            </div>
+        </div>
+
+        <!-- SAVE POINT -->
+        <div class="game-card" style="background: #e3f2fd; border-color: var(--accent-blue);">
+            <div class="card-header" style="border-bottom: none; margin-bottom: 0;">
+                <div class="header-title">💎 SAVE POINT (WARRANTY)</div>
+                <div>ACTIVE</div>
+            </div>
+            <p style="margin-top: 10px;">All quests include a 14-day bug protection spell.</p>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM ACTION BAR -->
+    <div class="action-bar">
+        <div class="total-display">
+            <span style="font-size: 0.7rem; color: #888;">ESTIMATED LOOT COST</span>
+            <span style="font-size: 1.5rem; font-weight: bold;" id="total-cost">£0</span>
+        </div>
+        <a href="mailto:hello@calmware.dev" class="btn-checkout" id="checkout-btn">START GAME -></a>
+    </div>
+
+    <script>
+        // Game State
+        let currentGold = 0;
+        let currentXP = 0;
+        let currentLevel = 1;
+        let questCost = 0;
+        let itemCost = 0;
+
+        // DOM Elements
+        const goldDisplay = document.getElementById('gold-display');
+        const xpFill = document.getElementById('xp-fill');
+        const levelNum = document.getElementById('level-num');
+        const totalCostDisplay = document.getElementById('total-cost');
+        const msgBox = document.getElementById('msg-box');
+        const checkoutBtn = document.getElementById('checkout-btn');
+
+        // Sound Effects (simulated visual)
+        function playSoundEffect() {
+            // Just a placeholder for logic expansion
+        }
+
+        // Spawn Floating Text
+        function spawnParticle(x, y, text) {
+            const el = document.createElement('div');
+            el.className = 'particle';
+            el.innerText = text;
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            document.body.appendChild(el);
+            
+            setTimeout(() => el.remove(), 1000);
+        }
+
+        // Update UI
+        function updateUI() {
+            const total = questCost + itemCost;
+            
+            // Animate Numbers
+            goldDisplay.innerText = total;
+            totalCostDisplay.innerText = "£" + total;
+
+            // XP Logic
+            let xpPercent = (currentXP % 500) / 500 * 100;
+            if (xpPercent > 100) xpPercent = 100;
+            xpFill.style.width = xpPercent + "%";
+            
+            const newLevel = Math.floor(currentXP / 500) + 1;
+            if (newLevel > currentLevel) {
+                currentLevel = newLevel;
+                levelNum.innerText = currentLevel;
+                spawnParticle(window.innerWidth / 2, window.innerHeight / 2, "LEVEL UP!");
+                // Flash HUD
+                document.querySelector('.hud-container').style.transform = "translateX(-50%) scale(1.1)";
+                setTimeout(() => {
+                    document.querySelector('.hud-container').style.transform = "translateX(-50%) scale(1)";
+                }, 200);
+            }
+
+            // Update Mailto Link
+            checkoutBtn.href = `mailto:hello@calmware.dev?subject=New Quest Estimate: £${total}`;
+        }
+
+        // Select Quest (Radio behavior)
+        function selectQuest(el, price, xp) {
+            // Remove active class from siblings
+            const siblings = el.parentElement.children;
+            for(let sib of siblings) {
+                sib.classList.remove('active');
+            }
+            
+            el.classList.add('active');
+            questCost = price;
+            currentXP += xp; // Add XP once (simplified logic)
+            
+            spawnParticle(el.getBoundingClientRect().left + 50, el.getBoundingClientRect().top, "+" + xp + " XP");
+            
+            updateUI();
+        }
+
+        // Buy Item (Cumulative)
+        function buyItem(price, xp, event) {
+            itemCost += price;
+            currentXP += xp;
+            
+            spawnParticle(event.clientX, event.clientY, "+" + xp + " XP");
+            spawnParticle(event.clientX, event.clientY - 30, "+£" + price);
+            
+            // Show message box briefly
+            msgBox.classList.add('show');
+            setTimeout(() => msgBox.classList.remove('show'), 2000);
+
+            updateUI();
+        }
+
+    </script>
+
+</body>
+</html>
+

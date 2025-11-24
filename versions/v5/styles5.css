@@ -1,0 +1,271 @@
+/* Dark Glowing / Glassmorphism Theme */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #050505;
+  --surface: rgba(20, 20, 20, 0.6);
+  --surface-highlight: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #ffffff;
+  --text-muted: #888888;
+  
+  /* Glow Gradients */
+  --glow-primary: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
+  --glow-secondary: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
+  
+  --accent-cyan: #00f2ff;
+  --accent-purple: #bd00ff;
+  
+  --font-main: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  
+  /* Ambient Background Glows */
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(0, 242, 255, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(189, 0, 255, 0.15) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Typography */
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+  background: linear-gradient(to right, #fff, #888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-top: 10px;
+  display: block;
+}
+
+/* Cards (Glassmorphism) */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Glowing Borders on Hover */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card:hover::before { opacity: 1; }
+
+/* Grid Placements */
+.header-section {
+  grid-column: span 12;
+  text-align: center;
+  padding: 60px 0;
+}
+
+.pricing-section {
+  grid-column: span 8;
+}
+
+.micro-section {
+  grid-column: span 4;
+}
+
+.support-section {
+  grid-column: span 6;
+}
+
+.warranty-section {
+  grid-column: span 6;
+}
+
+/* Feature Tickets Styling */
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ticket-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.ticket-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.ticket-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  display: block;
+}
+
+.ticket-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.price-pill {
+  background: var(--glow-primary);
+  color: #000;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+/* Micro Tasks */
+.micro-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.micro-item {
+  background: rgba(0,0,0,0.3);
+  padding: 15px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.micro-price {
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+}
+
+/* Support Plan */
+.support-card {
+  background: linear-gradient(160deg, rgba(20,20,20,0.8), rgba(10,10,10,0.9));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.support-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 24px;
+  padding: 1px;
+  background: var(--glow-secondary);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+}
+
+.price-large {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  background: var(--glow-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 20px 0;
+}
+
+/* Warranty */
+.warranty-list li {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 12px;
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+.icon-check { color: var(--accent-cyan); }
+.icon-cross { color: #ff3366; }
+
+/* Footer */
+.footer {
+  grid-column: span 12;
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .pricing-section, .micro-section, .support-section, .warranty-section {
+    grid-column: span 12;
+  }
+  
+  h1 { font-size: 3rem; }
+}
+

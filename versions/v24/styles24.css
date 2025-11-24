@@ -1,0 +1,182 @@
+/* Neo-Brutalist 24: Swiss Grunge */
+/* Swiss typography met with grunge aesthetics */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Work+Sans:wght@400;600&display=swap');
+
+:root {
+    --bg: #f4f1ea; /* Paper */
+    --ink: #1a1a1a;
+    --red: #d62828;
+    --tape: rgba(0,0,0,0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    margin: 0;
+    padding: 2rem;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231a1a1a' fill-opacity='0.03'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin: 0 0 1rem 0;
+    color: var(--ink);
+}
+
+h1 {
+    font-size: 4.5rem;
+    line-height: 0.9;
+    margin-bottom: 3rem;
+    border-left: 10px solid var(--red);
+    padding-left: 2rem;
+}
+
+.highlight-span {
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 0.4em;
+    padding: 0.2rem 1rem;
+    display: block;
+    width: fit-content;
+    margin-top: 1rem;
+}
+
+h2 {
+    font-size: 3rem;
+    border-bottom: 5px solid var(--ink);
+    display: inline-block;
+}
+
+/* Layouts */
+.intro-grid, .pricing-options, .policy-grid {
+    display: grid;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+    .intro-grid { grid-template-columns: 1.5fr 1fr; }
+    .pricing-options { grid-template-columns: 1fr 1fr; }
+    .policy-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Cards (Tape Effect) */
+.card, .price-box, .policy-box {
+    background: #fff;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    transform: rotate(var(--rotation));
+}
+
+/* Random rotations would need JS or nth-child, faking it here */
+.card:nth-child(odd) { --rotation: 1deg; }
+.card:nth-child(even) { --rotation: -1deg; }
+.price-box:nth-child(odd) { --rotation: -2deg; }
+.price-box:nth-child(even) { --rotation: 2deg; }
+
+/* Tape */
+.card::before, .price-box::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 100px;
+    height: 30px;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.1);
+    transform: translateX(-50%) rotate(-2deg);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Button */
+.cta-button {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    padding: 1.2rem 3rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.2rem;
+}
+
+.cta-button:hover {
+    background: var(--ink);
+    color: var(--bg);
+}
+
+/* Table */
+.pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3rem 0;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.pricing-table th {
+    text-align: left;
+    border-bottom: 3px solid var(--ink);
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.pricing-table td {
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+/* List Styling */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 0.8rem;
+    padding-left: 2rem;
+    position: relative;
+}
+
+li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: bold;
+}
+
+/* Alert */
+.alert-box {
+    border: 2px solid var(--red);
+    color: var(--red);
+    padding: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    transform: rotate(-2deg);
+    background: #fff;
+}
+
+footer {
+    margin-top: 5rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+

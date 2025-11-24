@@ -1,0 +1,273 @@
+/* SKETCHBOOK / ANTI-DESIGN THEME */
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Patrick+Hand&family=Courier+Prime:wght@400;700&display=swap');
+
+:root {
+  --paper: #fdfbf7;
+  --paper-line: #e1e1e1;
+  --ink: #2a2a2a;
+  --pencil: #666666;
+  --blue-pen: #0000ee;
+  --highlighter: rgba(255, 255, 0, 0.4);
+  --sticky-yellow: #fff740;
+  --sticky-pink: #ff7eb9;
+  --tape: rgba(255, 255, 255, 0.5);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'Courier Prime', monospace; /* Base typewriter font */
+  margin: 0;
+  padding: 2rem;
+  background-image: 
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-family: 'Gloria Hallelujah', cursive; /* Hand-drawn headers */
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 4rem;
+  margin: 0;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
+.tagline {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.5rem;
+  color: var(--pencil);
+  margin-top: 0.5rem;
+  transform: rotate(1deg);
+}
+
+/* Header Area */
+header {
+  margin-bottom: 5rem;
+  position: relative;
+  padding: 2rem;
+  border: 3px solid var(--ink);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; /* Sketchy border */
+  background: #fff;
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
+  max-width: 80%;
+}
+
+header::after {
+  content: '★';
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  font-size: 3rem;
+  color: var(--blue-pen);
+  transform: rotate(15deg);
+}
+
+/* Highlighting Effect */
+.highlight {
+  background: linear-gradient(100deg, rgba(255,255,0,0) 0%, rgba(255,255,0,0) 5%, var(--highlighter) 10%, var(--highlighter) 95%, rgba(255,255,0,0) 100%);
+  padding: 0 5px;
+}
+
+/* Crossed Out */
+.crossed {
+  text-decoration: line-through;
+  text-decoration-color: red;
+  text-decoration-thickness: 2px;
+  color: #aaa;
+}
+
+.correction {
+  font-family: 'Patrick Hand', cursive;
+  color: red;
+  position: absolute;
+  transform: rotate(-10deg) translate(0, -10px);
+  font-weight: bold;
+}
+
+/* Sections */
+section {
+  margin-bottom: 6rem;
+  position: relative;
+}
+
+/* Sticky Note Grid */
+.sticky-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.sticky-note {
+  background: var(--sticky-yellow);
+  width: 250px;
+  padding: 1.5rem;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+  position: relative;
+  transition: transform 0.2s;
+  color: #000;
+}
+
+.sticky-note:hover {
+  transform: scale(1.05) !important;
+  z-index: 10;
+}
+
+.sticky-note:nth-child(1) { transform: rotate(-3deg); background: var(--sticky-yellow); }
+.sticky-note:nth-child(2) { transform: rotate(2deg); background: #ff9; }
+.sticky-note:nth-child(3) { transform: rotate(-1deg); background: var(--sticky-pink); }
+
+/* Tape Effect */
+.tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 25px;
+  background: rgba(255, 255, 255, 0.4);
+  border-left: 1px dashed rgba(0,0,0,0.1);
+  border-right: 1px dashed rgba(0,0,0,0.1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Doodle Price Circle */
+.price-circle {
+  border: 3px solid var(--blue-pen);
+  border-radius: 50% 45% 55% 50% / 50% 55% 45% 50%;
+  padding: 0.5rem;
+  color: var(--blue-pen);
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 1rem;
+  transform: rotate(-5deg);
+}
+
+/* Micro Tasks: Notebook List */
+.notebook-paper {
+  background: #fff;
+  padding: 2rem 2rem 2rem 4rem;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+  position: relative;
+  background-image: linear-gradient(#99f 1px, transparent 1px);
+  background-size: 100% 2rem;
+  line-height: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  transform: rotate(1deg);
+}
+
+.notebook-paper::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f55;
+}
+
+.notebook-item {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.3rem;
+}
+
+/* Support Area: Asymmetrical Box */
+.support-box {
+  background: #222;
+  color: #fff;
+  padding: 3rem;
+  transform: rotate(-1deg);
+  clip-path: polygon(2% 2%, 98% 0%, 100% 98%, 0% 100%);
+  position: relative;
+}
+
+.support-box h2 {
+  color: #fff;
+  font-family: 'Courier Prime', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.support-doodle {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  font-size: 4rem;
+  color: var(--sticky-yellow);
+  transform: rotate(15deg);
+}
+
+/* Warranty: Napkin Sketch */
+.napkin {
+  background: #fff;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 2px;
+  transform: rotate(2deg);
+  background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23eeeeee' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.napkin h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  border-bottom: 2px dashed var(--pencil);
+  padding-bottom: 10px;
+}
+
+.check-mark {
+  color: green;
+  font-size: 1.2rem;
+}
+
+.x-mark {
+  color: red;
+  font-size: 1.2rem;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-family: 'Patrick Hand', cursive;
+  margin-top: 5rem;
+  font-size: 1.2rem;
+  color: var(--pencil);
+}
+
+.arrow-doodle {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-right: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  transform: rotate(45deg);
+}
+
+@media (max-width: 600px) {
+  h1 { font-size: 2.5rem; }
+  .sticky-grid { flex-direction: column; align-items: center; }
+  .notebook-paper { padding-left: 3rem; }
+}
+
